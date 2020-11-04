@@ -1,0 +1,4 @@
+./build/
+./nbproject/private/
+node_modules
+*.sqlite
