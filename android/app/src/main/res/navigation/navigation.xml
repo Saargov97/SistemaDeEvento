@@ -9,7 +9,11 @@
         android:id="@+id/menu"
         android:name="com.example.easycheckin.Menu"
         android:label="fragment_menu"
-        tools:layout="@layout/fragment_menu" />
+        tools:layout="@layout/fragment_menu" >
+        <action
+            android:id="@+id/action_menu_to_sync"
+            app:destination="@id/sync" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.example.easycheckin.ui.login.LoginFragment"
@@ -19,4 +23,9 @@
             android:id="@+id/action_loginFragment_to_menu"
             app:destination="@id/menu" />
     </fragment>
+    <fragment
+        android:id="@+id/sync"
+        android:name="com.example.easycheckin.Sync"
+        android:label="fragment_sync"
+        tools:layout="@layout/fragment_sync" />
 </navigation>

@@ -1,16 +1,23 @@
 const axios = require('axios')
 
-axios.create({baseURL: 'http://localhost:3001/'})
+axios.create({ baseURL: 'http://localhost:3001/' })
 
-async function gerar (inscricaoId, req) {
-  console.log('gerar veio')
-  return await axios.post(`GerarCertificado/${inscricaoId}`, req)
-    .then(response => console.log(response))
-    .catch(error => console.log(error));  
+function gerar(inscricaoId, req) {
+    console.log('gerar veio')
+    /*return await axios.post(`GerarCertificado/${inscricaoId}`, req)
+      .then(response => console.log(response))
+      .catch(error => console.log(error));  */
 }
 
-function teste () {
-  return "2"
-}
 
-module.export = { gerar: gerar, teste: teste }   
+module.export = {
+    async teste (req, res) {
+        try {
+            res.send(100)
+        } catch (err) {
+            res.status(500).send({
+                error: 'Ocorreu um erro ao buscar teste'
+            })
+        }
+    }
+}   

@@ -14,7 +14,7 @@ function hashCertificado(inscricaoId, options) {
 }
 
 module.exports = {
-  async index (req, res) {
+  async index(req, res) {
     try {
       const inscricoes = await Inscricao.findAll({
         limit: 50
@@ -26,12 +26,12 @@ module.exports = {
       })
     }
   },
-  async getOwner (req, res) {
+  async getOwner(req, res) {
     try {
-      User.hasMany(Inscricao, {foreignKey: 'userId'})
-      Inscricao.belongsTo(User, {foreignKey: 'userId'})
-      Evento.hasMany(Inscricao, {foreignKey: 'eventoId', where: {userId: req.params.userId}})
-      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
+      User.hasMany(Inscricao, { foreignKey: 'userId' })
+      Inscricao.belongsTo(User, { foreignKey: 'userId' })
+      Evento.hasMany(Inscricao, { foreignKey: 'eventoId', where: { userId: req.params.userId } })
+      Inscricao.belongsTo(Evento, { foreignKey: 'eventoId' })
       const inscricoes = await Inscricao.findAll({
         include: [Evento, User]
       })
@@ -42,12 +42,12 @@ module.exports = {
       })
     }
   },
-  async getUser (req, res) {
+  async getUser(req, res) {
     try {
-      User.hasMany(Inscricao, {foreignKey: 'userId'})
-      Inscricao.belongsTo(User, {foreignKey: 'userId'})
-      Evento.hasMany(Inscricao, {foreignKey: 'eventoId'})
-      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
+      User.hasMany(Inscricao, { foreignKey: 'userId' })
+      Inscricao.belongsTo(User, { foreignKey: 'userId' })
+      Evento.hasMany(Inscricao, { foreignKey: 'eventoId' })
+      Inscricao.belongsTo(Evento, { foreignKey: 'eventoId' })
       const inscricoes = await Inscricao.findAll({
         where: {
           userId: req.params.userId
@@ -60,12 +60,12 @@ module.exports = {
       })
     }
   },
-  async getEvento (req, res) {
+  async getEvento(req, res) {
     try {
-      User.hasMany(Inscricao, {foreignKey: 'userId'})
-      Inscricao.belongsTo(User, {foreignKey: 'userId'})
-      Evento.hasMany(Inscricao, {foreignKey: 'eventoId'})
-      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
+      User.hasMany(Inscricao, { foreignKey: 'userId' })
+      Inscricao.belongsTo(User, { foreignKey: 'userId' })
+      Evento.hasMany(Inscricao, { foreignKey: 'eventoId' })
+      Inscricao.belongsTo(Evento, { foreignKey: 'eventoId' })
       const inscricoes = await Inscricao.findAll({
         where: {
           eventoId: req.params.eventoId
@@ -78,13 +78,25 @@ module.exports = {
       })
     }
   },
-  async geraCertificado (req, res) {
+  async geraCertificado(req, res) {
     try {
       console.log('hash:' + hashCertificado(req.params.inscricaoId))
-      // Validar checkin primeiro
-      const inscricao = await Inscricao.update({
-          des_hash: hashCertificado(req.params.inscricaoId)
-        }, {
+      var inscricao = await Inscricao.findOne({
+        where: {
+          id: req.params.inscricaoId,
+          ind_checkin: 1
+        }
+      })
+
+      if (!inscricao) {
+        return res.status(403).send({
+          error: 'Registro de presença não encontrado. Não é permitido gerar o certificado!'
+        })
+      }
+
+      inscricao = await Inscricao.update({
+        des_hash: hashCertificado(req.params.inscricaoId)
+      }, {
         where: {
           id: req.params.inscricaoId
         }
@@ -96,10 +108,10 @@ module.exports = {
         nom_evento: req.body.nom_evento,
         nom_pessoa: req.body.nom_pessoa,
         num_cpf: req.body.num_cpf,
-        dta_evento: req.body.dta_evento,      
+        dta_evento: req.body.dta_evento,
       }
-      console.log('Teste: ' + (await GeraCertificado.teste))
-      
+      console.log(GeraCertificado.teste)
+
       //const r = (await GeraCertificado.gerar(req.params.inscricaoId, certificado)).data
 
       res.send(certificado)
@@ -109,7 +121,7 @@ module.exports = {
       })
     }
   },
-  async post (req, res) {
+  async post(req, res) {
     try {
       const inscricao = await Inscricao.create(req.body)
       res.send(inscricao)
@@ -119,7 +131,7 @@ module.exports = {
       })
     }
   },
-  async put (req, res) {
+  async put(req, res) {
     try {
       const inscricao = await Inscricao.update(req.body, {
         where: {
@@ -133,7 +145,7 @@ module.exports = {
       })
     }
   },
-  async delete (req, res) {
+  async delete(req, res) {
     try {
       await Inscricao.destroy({
         where: {
@@ -147,7 +159,7 @@ module.exports = {
       })
     }
   },
-  async show (req, res) {
+  async show(req, res) {
     try {
       const inscricao = await Inscricao.findOne({
         where: {
