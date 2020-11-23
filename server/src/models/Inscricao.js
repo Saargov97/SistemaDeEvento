@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
     },
     des_qrcode: {
-        type: DataTypes.STRING,
-        unique: true
+      type: DataTypes.STRING,
+      unique: true
     },
     certificadoId: {
       type: DataTypes.INTEGER,
@@ -22,5 +22,18 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+/*  Inscricao.associate = models => {
+    Inscricao.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+    Inscricao.belongsTo(models.Evento, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+  }
+*/
   return Inscricao
 }

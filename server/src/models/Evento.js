@@ -23,5 +23,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
+/*  Evento.associate = models => {
+    Evento.belongsTo(models.User, {
+      foreignKey: {
+        allowNull: false
+      }
+    })
+    Evento.hasMany(models.Inscricao, {
+      onDelete: "cascade"
+    })
+  }*/
+
+
   return Evento
 }

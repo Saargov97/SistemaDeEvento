@@ -1,7 +1,7 @@
 <template>
   <v-layout ml-16 mr-16 mt-8>
     <v-flex>
-      <panel title="Eventos">
+      <panel title="Minhas inscrições">
           <v-row>
             <v-col cols="12" sm="4" md="3">
               Nome
@@ -16,26 +16,32 @@
               Carga Horária
             </v-col>
             <v-col cols="6" md="2">
-              Increver-se
+              Ações
             </v-col>
           </v-row>
-          <div v-for="evento in eventos" :key="evento.id">
+          <div v-for="inscricao in inscricoes" :key="inscricao.id">
               <v-row>
                 <v-col cols="12" sm="4" md="3">
-                    {{evento.nom_evento}}
+                    {{inscricao.Evento.nom_evento}}
                 </v-col>
                 <v-col cols="6" sm="2">
-                    {{evento.dta_evento | formatDate}}
+                    {{inscricao.Evento.dta_evento | formatDate}}
                 </v-col>
                 <v-col cols="6" sm="2">
-                    {{evento.vlr_evento | toCurrency}}
+                    {{inscricao.Evento.vlr_evento | toCurrency}}
                 </v-col>
                 <v-col cols="6" sm="2">
-                    {{evento.des_carga_horaria}}
+                    {{inscricao.Evento.des_carga_horaria}}
                 </v-col>
                 <v-col cols="6" md="2">
-                  <v-btn class="green accent-2" fab ligth small right middle @click="inscrever({eventoId: evento.id})">
-                    <v-icon>add_box</v-icon>
+                   <v-btn class="green accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
+                    <v-icon>save_alt</v-icon>
+                  </v-btn>
+                  <v-btn class="blue accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
+                    <v-icon>restore_page</v-icon>
+                  </v-btn>
+                  <v-btn class="red accent-2" fab ligth small right middle @click="desinscrever({inscricaoId: inscricao.id})">
+                    <v-icon>cancel</v-icon>
                   </v-btn>
                 </v-col>
               </v-row>
@@ -47,33 +53,29 @@
 
 <script>
 import Panel from '@/components/Panel'
-import EventosService from '@/services/EventosService'
 import InscricoesService from '@/services/InscricoesService'
+
 export default {
   components: {
     Panel
   },
   data () {
     return {
+      inscricoes: null,
       eventos: null
     }
   },
   async mounted () {
-    // do a request to the backend for all the banks
-    this.eventos = (await EventosService.index()).data
+    this.inscricoes = (await InscricoesService.user(this.$store.state.user.id)).data
   },
   methods: {
     navigateTo (route) {
       this.$router.push(route)
     },
-    async inscrever (eventoId) {
+    async desinscrever (inscricaoId) {
       try {
-        const inscricao = {
-          eventoId: eventoId.eventoId,
-          userId: this.$store.state.user.id
-        }
-        confirm('Confirma a inscrição no evento?') && await InscricoesService.post(inscricao)
-        // this.eventos = (await EventosService.index()).data
+        confirm('Confirma a desinscrição do evento?') && await InscricoesService.delete(inscricaoId.inscricaoId)
+        this.inscricoes = (await InscricoesService.user(this.$store.state.user.id)).data
         // this.$router.push({ name: 'banks' })
       } catch (error) {
         this.error = error.response.data.error

@@ -1,4 +1,6 @@
 const { Inscricao } = require('../models')
+const { User } = require('../models')
+const { Evento } = require('../models')
 
 
 module.exports = {
@@ -16,11 +18,32 @@ module.exports = {
   },
   async getUser (req, res) {
     try {
+      User.hasMany(Inscricao, {foreignKey: 'userId'})
+      Inscricao.belongsTo(User, {foreignKey: 'userId'})
+      Evento.hasMany(Inscricao, {foreignKey: 'eventoId'})
+      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
       const inscricoes = await Inscricao.findAll({
         where: {
-          id: req.params.userId
-        },
-        limit: 50
+          userId: req.params.userId
+        }, include: [Evento, User]
+      })
+      res.send(inscricoes)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao buscar a lista de inscrições'
+      })
+    }
+  },
+  async getEvento (req, res) {
+    try {
+      User.hasMany(Inscricao, {foreignKey: 'userId'})
+      Inscricao.belongsTo(User, {foreignKey: 'userId'})
+      Evento.hasMany(Inscricao, {foreignKey: 'eventoId'})
+      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
+      const inscricoes = await Inscricao.findAll({
+        where: {
+          eventoId: req.params.eventoId
+        }, include: [Evento, User]
       })
       res.send(inscricoes)
     } catch (err) {

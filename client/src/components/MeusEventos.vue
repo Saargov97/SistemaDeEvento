@@ -19,7 +19,7 @@
               Ações
             </v-col>
           </v-row>
-          <div v-for="evento in eventos" :key="evento.id" :rows="formatedItems">
+          <div v-for="evento in eventos" :key="evento.id">
               <v-row>
                 <v-col cols="12" sm="4" md="3">
                     {{evento.nom_evento}}

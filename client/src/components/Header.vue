@@ -7,6 +7,7 @@
     <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'perfil'})">Perfil</v-btn>
     <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'eventos'})">Eventos</v-btn>
     <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'meuseventos'})">Meus Eventos</v-btn>
+    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'minhasinscricoes'})">Minhas Inscrições</v-btn>
     <v-btn v-if="!$store.state.isUserLoggedIn" @click="navigateTo({name: 'register'})">Sign up</v-btn>
     <v-btn v-if="!$store.state.isUserLoggedIn" @click="navigateTo({name: 'login'})">Login</v-btn>
     <v-btn v-if="$store.state.isUserLoggedIn" @click="logout()">Logout</v-btn>

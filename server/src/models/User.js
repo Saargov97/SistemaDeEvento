@@ -43,5 +43,14 @@ module.exports = (sequelize, DataTypes) => {
     return vtest;
   }
 
+/*  User.associate = models => {
+    User.hasMany(models.Evento, {
+      onDelete: "cascade"
+    }),
+    User.hasMany(models.Inscricao, {
+      onDelete: "cascade"
+    })
+  }*/
+
   return User
 }

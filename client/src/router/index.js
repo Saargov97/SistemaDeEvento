@@ -5,6 +5,7 @@ import Register from '@/components/Register'
 import Login from '@/components/Login'
 import Eventos from '@/components/Eventos'
 import MeusEventos from '@/components/MeusEventos'
+import MinhasInscricoes from '@/components/MinhasInscricoes'
 // import Banks2 from '@/components/Banks2'
 import Perfil from '@/components/Perfil'
 import BankView from '@/components/BankView'
@@ -36,6 +37,11 @@ export default new Router({
       path: '/meuseventos',
       name: 'meuseventos',
       component: MeusEventos
+    },
+    {
+      path: '/minhasinscricoes',
+      name: 'minhasinscricoes',
+      component: MinhasInscricoes
     },
     {
       path: '/perfil',
