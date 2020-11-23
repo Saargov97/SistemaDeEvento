@@ -31,7 +31,9 @@ module.exports = {
   },
   async post (req, res) {
     try {
+      console.log("certificado")
       const certificado = await Certificado.create(req.body)
+      console.log("certificado2")
       res.send(certificado)
     } catch (err) {
       res.status(500).send({

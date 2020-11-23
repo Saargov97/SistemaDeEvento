@@ -1,7 +1,17 @@
 const { Inscricao } = require('../models')
 const { User } = require('../models')
 const { Evento } = require('../models')
+const bcrypt = require('bcrypt')
+const md5 = require('md5');
+const GeraCertificado = require('../services/GeraCertificado')
 
+function hashCertificado(inscricaoId, options) {
+  //const saltRounds = 10;
+
+  //const hash = bcrypt.hashSync(`${inscricaoId}`, saltRounds);
+  //console.log(hash)
+  return md5(`${inscricaoId}`);
+}
 
 module.exports = {
   async index (req, res) {
@@ -65,6 +75,37 @@ module.exports = {
     } catch (err) {
       res.status(500).send({
         error: 'Ocorreu um erro ao buscar a lista de inscrições'
+      })
+    }
+  },
+  async geraCertificado (req, res) {
+    try {
+      console.log('hash:' + hashCertificado(req.params.inscricaoId))
+      // Validar checkin primeiro
+      const inscricao = await Inscricao.update({
+          des_hash: hashCertificado(req.params.inscricaoId)
+        }, {
+        where: {
+          id: req.params.inscricaoId
+        }
+      })
+      console.log('inscricao:')
+
+      const certificado = {
+        idInscricao: req.params.inscricaoId,
+        nom_evento: req.body.nom_evento,
+        nom_pessoa: req.body.nom_pessoa,
+        num_cpf: req.body.num_cpf,
+        dta_evento: req.body.dta_evento,      
+      }
+      console.log('Teste: ' + (await GeraCertificado.teste))
+      
+      //const r = (await GeraCertificado.gerar(req.params.inscricaoId, certificado)).data
+
+      res.send(certificado)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao gerar certificado' + err
       })
     }
   },

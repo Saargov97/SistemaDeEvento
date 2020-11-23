@@ -22,4 +22,5 @@ module.exports = (app) => {
   app.get('/inscricoesDono/:userId', InscricaoController.getOwner)
   app.post('/inscricao', InscricaoController.post)
   app.delete('/inscricao/:inscricaoId', InscricaoController.delete)
+  app.post('/geraCertificado/:inscricaoId', InscricaoController.geraCertificado)
 }

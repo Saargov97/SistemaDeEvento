@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
     },
+    des_hash: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     des_qrcode: {
       type: DataTypes.STRING,
       unique: true

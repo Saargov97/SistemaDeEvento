@@ -40,7 +40,7 @@ const geraPdf = async (req) => {
   return bufferResult;
 }
 
-app.post("/", async (req, res) => {
+app.post("/gerarCertificado", async (req, res) => {
   try {
     let bufferResult = await geraPdf(req);
 
