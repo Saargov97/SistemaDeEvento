@@ -121,6 +121,31 @@ module.exports = {
       })
     }
   },
+  async validaCertificado(req, res) {
+    try {
+      User.hasMany(Inscricao, { foreignKey: 'userId' })
+      Inscricao.belongsTo(User, { foreignKey: 'userId' })
+      Evento.hasMany(Inscricao, { foreignKey: 'eventoId' })
+      Inscricao.belongsTo(Evento, { foreignKey: 'eventoId' })
+      var inscricao = await Inscricao.findOne({
+        where: {
+          des_hash: req.params.desHash
+        }, include: [Evento, User]
+      })
+
+      if (!inscricao) {
+        return res.status(403).send({
+          error: 'Chave do certificado não encontrada!'
+        })
+      }
+
+      res.send(inscricao)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao validar chave do certificado' + err
+      })
+    }
+  },
   async post(req, res) {
     try {
       const inscricao = await Inscricao.create(req.body)

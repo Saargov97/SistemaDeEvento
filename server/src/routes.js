@@ -23,4 +23,5 @@ module.exports = (app) => {
   app.post('/inscricao', InscricaoController.post)
   app.delete('/inscricao/:inscricaoId', InscricaoController.delete)
   app.post('/geraCertificado/:inscricaoId', InscricaoController.geraCertificado)
+  app.get('/validaCertificado/:desHash', InscricaoController.validaCertificado)
 }
