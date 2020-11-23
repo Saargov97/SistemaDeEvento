@@ -1,9 +1,9 @@
 const { Inscricao } = require('../models')
 const { User } = require('../models')
 const { Evento } = require('../models')
-const bcrypt = require('bcrypt')
 const md5 = require('md5');
-const GeraCertificado = require('../services/GeraCertificado')
+const fetch = require('node-fetch');
+
 
 function hashCertificado(inscricaoId, options) {
   //const saltRounds = 10;
@@ -89,10 +89,10 @@ module.exports = {
       })
 
       if (!inscricao) {
-        return res.status(403).send({
-          error: 'Registro de presença não encontrado. Não é permitido gerar o certificado!'
-        })
-      }
+         return res.status(403).send({
+           error: 'Registro de presença não encontrado. Não é permitido gerar o certificado!'
+         })
+       }
 
       inscricao = await Inscricao.update({
         des_hash: hashCertificado(req.params.inscricaoId)
@@ -110,11 +110,19 @@ module.exports = {
         num_cpf: req.body.num_cpf,
         dta_evento: req.body.dta_evento,
       }
-      console.log(GeraCertificado.teste)
 
-      //const r = (await GeraCertificado.gerar(req.params.inscricaoId, certificado)).data
+      const response = await fetch('http://localhost:3001/gerarCertificado', {
+        method: 'POST',
+        body: JSON.stringify(certificado),
+        headers: { 'Content-Type': 'application/json' },
+      });
+      const buffer = await response.buffer();
 
-      res.send(certificado)
+
+      //console.log(buffer)
+
+      res.setHeader('Content-Type', 'application/pdf');
+      res.send(buffer);
     } catch (err) {
       res.status(500).send({
         error: 'Ocorreu um erro ao gerar certificado' + err
