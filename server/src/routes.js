@@ -8,6 +8,7 @@ module.exports = (app) => {
   app.post('/login', AuthenticationController.login)
   app.put('/user/:userId', AuthenticationController.put)
   app.get('/user/:userId', AuthenticationController.show)
+  app.get('/users', AuthenticationController.index)
   app.get('/eventos', EventoController.index)
   app.post('/eventos', EventoController.post)
   app.get('/eventos/:eventoId', EventoController.show)
@@ -18,6 +19,7 @@ module.exports = (app) => {
   app.put('/inscricao/:inscricaoId', InscricaoController.put)
   app.get('/inscricaoUsuario/:userId', InscricaoController.getUser)
   app.get('/inscricaoEvento/:eventoId', InscricaoController.getEvento)
+  app.get('/inscricoesDono/:userId', InscricaoController.getOwner)
   app.post('/inscricao', InscricaoController.post)
   app.delete('/inscricao/:inscricaoId', InscricaoController.delete)
 }

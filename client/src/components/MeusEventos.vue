@@ -34,15 +34,6 @@
                     {{evento.des_carga_horaria}}
                 </v-col>
                 <v-col cols="6" md="2">
-                   <v-btn class="green accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
-                    <v-icon>save_alt</v-icon>
-                  </v-btn>
-                  <v-btn class="blue accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
-                    <v-icon>restore_page</v-icon>
-                  </v-btn>
-                  <v-btn class="red accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
-                    <v-icon>cancel</v-icon>
-                  </v-btn>
                 </v-col>
               </v-row>
           </div>

@@ -55,6 +55,8 @@ export default {
       }
       try {
         await AuthenticationService.put(user)
+        const response = await AuthenticationService.show(this.$store.state.user.id)
+        this.$store.dispatch('setUser', response.data)
         this.$router.push({ name: 'root' })
       } catch (err) {
         console.log(err)

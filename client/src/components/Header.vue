@@ -1,7 +1,7 @@
 <template>
   <v-toolbar fixed dark class="cyan">
     <v-toolbar-title class="mr-4">
-      <span class="home" @click="navigateTo({name: 'root'})">Event</span>
+      <span class="home" @click="navigateTo({name: 'root'})">Sistema de Eventos</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
     <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'perfil'})">Perfil</v-btn>

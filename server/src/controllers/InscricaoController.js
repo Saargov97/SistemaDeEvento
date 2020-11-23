@@ -16,6 +16,22 @@ module.exports = {
       })
     }
   },
+  async getOwner (req, res) {
+    try {
+      User.hasMany(Inscricao, {foreignKey: 'userId'})
+      Inscricao.belongsTo(User, {foreignKey: 'userId'})
+      Evento.hasMany(Inscricao, {foreignKey: 'eventoId', where: {userId: req.params.userId}})
+      Inscricao.belongsTo(Evento, {foreignKey: 'eventoId'})
+      const inscricoes = await Inscricao.findAll({
+        include: [Evento, User]
+      })
+      res.send(inscricoes)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao buscar a lista de inscrições'
+      })
+    }
+  },
   async getUser (req, res) {
     try {
       User.hasMany(Inscricao, {foreignKey: 'userId'})

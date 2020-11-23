@@ -43,6 +43,18 @@ module.exports = {
       })
     }
   },
+  async index (req, res) {
+    try {
+      const users = await User.findAll({
+        limit: 50
+      })
+      res.send(users)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao buscar a lista de usuários'
+      })
+    }
+  },
   async show (req, res) {
     try {
       const user = await User.findOne({
