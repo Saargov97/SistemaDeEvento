@@ -24,6 +24,39 @@ module.exports = {
       })
     }
   },
+  async put (req, res) {
+    try {
+      const user = await User.update(
+        { 
+          nom_pessoa: req.body.nom_pessoa,
+          num_cpf: req.body.num_cpf
+        }, 
+        {
+          where: {
+            id: req.params.userId
+        }
+      })
+      res.send(user)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao salvar usuário'
+      })
+    }
+  },
+  async show (req, res) {
+    try {
+      const user = await User.findOne({
+        where: {
+          id: req.params.userId
+        }
+      })
+      res.send(user)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao buscar o user'
+      })
+    }
+  },
   async login(req, res) {
     try {
       console.log('1')

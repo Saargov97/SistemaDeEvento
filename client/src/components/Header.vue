@@ -4,8 +4,9 @@
       <span class="home" @click="navigateTo({name: 'root'})">Event</span>
     </v-toolbar-title>
     <v-spacer></v-spacer>
-    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'banks'})">Bank</v-btn>
-    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'crud'})">Crud</v-btn>
+    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'perfil'})">Perfil</v-btn>
+    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'eventos'})">Eventos</v-btn>
+    <v-btn v-if="$store.state.isUserLoggedIn" @click="navigateTo({name: 'meuseventos'})">Meus Eventos</v-btn>
     <v-btn v-if="!$store.state.isUserLoggedIn" @click="navigateTo({name: 'register'})">Sign up</v-btn>
     <v-btn v-if="!$store.state.isUserLoggedIn" @click="navigateTo({name: 'login'})">Login</v-btn>
     <v-btn v-if="$store.state.isUserLoggedIn" @click="logout()">Logout</v-btn>

@@ -15,7 +15,7 @@
 
 <script>
 import Panel from '@/components/Panel'
-import BanksService from '@/services/BanksService'
+import EventosService from '@/services/EventosService'
 export default {
   data () {
     return {
@@ -28,7 +28,7 @@ export default {
   },
   async mounted () {
     const bankId = this.$store.state.route.params.bankId
-    this.bank = (await BanksService.show(bankId)).data
+    this.bank = (await EventosService.show(bankId)).data
     this.name = this.bank.name
     this.code = this.bank.code
   },
@@ -54,7 +54,7 @@ export default {
         return
       }
       try {
-        await BanksService.put(bank)
+        await EventosService.put(bank)
         this.$router.push({ name: 'banks' })
       } catch (err) {
         console.log(err)

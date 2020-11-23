@@ -15,7 +15,7 @@
 
 <script>
 import Panel from '@/components/Panel'
-import BanksService from '@/services/BanksService'
+import EventosService from '@/services/EventosService'
 export default {
   data () {
     return {
@@ -40,7 +40,7 @@ export default {
         return
       }
       try {
-        await BanksService.post(bank)
+        await EventosService.post(bank)
         this.$router.push({ name: 'banks' })
       } catch (err) {
         console.log(err)

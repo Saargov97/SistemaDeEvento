@@ -3,11 +3,11 @@ import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
 import Register from '@/components/Register'
 import Login from '@/components/Login'
-import Banks from '@/components/Banks'
+import Eventos from '@/components/Eventos'
+import MeusEventos from '@/components/MeusEventos'
 // import Banks2 from '@/components/Banks2'
-import CreateBank from '@/components/CreateBank'
+import Perfil from '@/components/Perfil'
 import BankView from '@/components/BankView'
-import Crud from '@/components/Crud'
 Vue.use(Router)
 
 export default new Router({
@@ -28,24 +28,24 @@ export default new Router({
       component: Login
     },
     {
-      path: '/banks',
-      name: 'banks',
-      component: Banks
+      path: '/eventos',
+      name: 'eventos',
+      component: Eventos
     },
     {
-      path: '/banks/create',
-      name: 'banks-create',
-      component: CreateBank
+      path: '/meuseventos',
+      name: 'meuseventos',
+      component: MeusEventos
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: Perfil
     },
     {
       path: '/banks/:bankId',
       name: 'bank',
       component: BankView
-    },
-    {
-      path: '/crus',
-      name: 'crud',
-      component: Crud
     }
   ]
 })
