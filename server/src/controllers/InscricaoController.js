@@ -80,6 +80,7 @@ module.exports = {
   },
   async geraCertificado(req, res) {
     try {
+      console.log(req.params.inscricaoId)
       const des_hash = hashCertificado(req.params.inscricaoId);
       User.hasMany(Inscricao, { foreignKey: 'userId' })
       Inscricao.belongsTo(User, { foreignKey: 'userId' })
@@ -98,23 +99,22 @@ module.exports = {
          })
        }
 
+      const certificado = {
+        idInscricao: req.params.inscricaoId,
+        nom_evento: inscricao.Evento.dataValues.nom_evento,
+        nom_pessoa: inscricao.User.dataValues.nom_pessoa,
+        num_cpf: inscricao.User.dataValues.num_cpf,
+        dta_evento: inscricao.Evento.dataValues.dta_evento,
+        des_hash: des_hash
+      }
+
       inscricao = await Inscricao.update({
         des_hash: des_hash
       }, {
         where: {
           id: req.params.inscricaoId
         }
-      })
-      console.log('inscricao:')
-
-      const certificado = {
-        idInscricao: req.params.inscricaoId,
-        nom_evento: inscricao.Evento.nom_evento,
-        nom_pessoa: inscricao.User.nom_pessoa,
-        num_cpf: inscricao.User.num_cpf,
-        dta_evento: inscricao.Evento.dta_evento,
-        des_hash: des_hash
-      }
+      })     
 
       const response = await fetch('http://localhost:3001/gerarCertificado', {
         method: 'POST',

@@ -92,7 +92,7 @@ export default {
       window.open(fileURL)
       */
       axios({
-        url: `http://localhost:8081/geraCertificado/${inscricaoId}`,
+        url: `http://localhost:8081/geraCertificado/${inscricaoId.inscricaoId}`,
         method: 'POST',
         responseType: 'blob'
       }).then((response) => {
@@ -102,7 +102,7 @@ export default {
     },
     async downloadCertificado (inscricaoId) {
       axios({
-        url: `http://localhost:8081/geraCertificado/${inscricaoId}`,
+        url: `http://localhost:8081/geraCertificado/${inscricaoId.inscricaoId}`,
         method: 'POST',
         responseType: 'blob'
       }).then((response) => {
