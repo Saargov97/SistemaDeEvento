@@ -1,3 +1,8 @@
+function createQRCode(inscricao, options) {
+  inscricao.setDataValue('des_qrcode', `QrEvent_${inscricao.id}_${inscricao.eventoId}_${inscricao.userId}`)
+  return;
+}
+
 module.exports = (sequelize, DataTypes) => {
   const Inscricao = sequelize.define('Inscricao', {
     eventoId: {
@@ -20,6 +25,12 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       type: DataTypes.INTEGER,
       defaultValue: 0
+    }
+  }, {
+    hooks: {
+      afterCreate: createQRCode
+      // beforeUpdate: hashPassword
+      // beforeSave: hashPassword
     }
   })
 

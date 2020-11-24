@@ -29,6 +29,13 @@ const geraPdf = async (req) => {
               <span style="font-size:30px"><b>${req.body.nom_evento}</b></span> <br/><br/>
               <span style="font-size:25px"><i>no qual ${req.body.nom_pessoa}, de CPF nº. ${req.body.num_cpf}, participou no dia</i></span><br/><br/>
               <span style="font-size:30px"><b>${req.body.dta_evento}</b></span> <br/><br/>
+              <br/><br/>
+              <br/><br/>
+              <br/><br/>
+              <br/><br/>
+              <br/><br/>
+              <br/><br/>
+              <span style="font-size:18px"><b>Chave de validação:</b> ${req.body.des_hash}
         </div>
         </div>
         `

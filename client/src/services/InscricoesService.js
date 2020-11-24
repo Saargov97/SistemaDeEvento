@@ -12,5 +12,8 @@ export default {
   },
   geraCertificado (inscricaoId) {
     return Api().post(`geraCertificado/${inscricaoId}`, {responseType: 'blob'})
+  },
+  validarChave (desHash) {
+    return Api().get(`validaCertificado/${desHash}`)
   }
 }

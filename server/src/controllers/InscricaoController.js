@@ -80,12 +80,16 @@ module.exports = {
   },
   async geraCertificado(req, res) {
     try {
-      console.log('hash:' + hashCertificado(req.params.inscricaoId))
+      const des_hash = hashCertificado(req.params.inscricaoId);
+      User.hasMany(Inscricao, { foreignKey: 'userId' })
+      Inscricao.belongsTo(User, { foreignKey: 'userId' })
+      Evento.hasMany(Inscricao, { foreignKey: 'eventoId' })
+      Inscricao.belongsTo(Evento, { foreignKey: 'eventoId' })
       var inscricao = await Inscricao.findOne({
         where: {
           id: req.params.inscricaoId,
           ind_checkin: 1
-        }
+        }, include: [Evento, User]
       })
 
       if (!inscricao) {
@@ -95,7 +99,7 @@ module.exports = {
        }
 
       inscricao = await Inscricao.update({
-        des_hash: hashCertificado(req.params.inscricaoId)
+        des_hash: des_hash
       }, {
         where: {
           id: req.params.inscricaoId
@@ -105,10 +109,11 @@ module.exports = {
 
       const certificado = {
         idInscricao: req.params.inscricaoId,
-        nom_evento: req.body.nom_evento,
-        nom_pessoa: req.body.nom_pessoa,
-        num_cpf: req.body.num_cpf,
-        dta_evento: req.body.dta_evento,
+        nom_evento: inscricao.Evento.nom_evento,
+        nom_pessoa: inscricao.User.nom_pessoa,
+        num_cpf: inscricao.User.num_cpf,
+        dta_evento: inscricao.Evento.dta_evento,
+        des_hash: des_hash
       }
 
       const response = await fetch('http://localhost:3001/gerarCertificado', {
@@ -161,6 +166,22 @@ module.exports = {
     } catch (err) {
       res.status(500).send({
         error: 'Ocorreu um erro ao salvar inscrição'
+      })
+    }
+  },
+  async checkin(req, res) {
+    try {
+      const inscricao = await Inscricao.update({
+        ind_checkin: 1
+      }, {
+        where: {
+          id: req.params.inscricaoId
+        }
+      })
+      res.send(inscricao)
+    } catch (err) {
+      res.status(500).send({
+        error: 'Ocorreu um erro ao registrar o checkin'
       })
     }
   },

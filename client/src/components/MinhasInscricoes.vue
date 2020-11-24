@@ -64,7 +64,8 @@ export default {
     return {
       inscricoes: null,
       eventos: null,
-      erros: null
+      erros: null,
+      response: null
     }
   },
   async mounted () {
@@ -112,7 +113,10 @@ export default {
         document.body.appendChild(fileLink)
 
         fileLink.click()
-      }).catch(error => alert(error.response.data.error))
+      }).catch((error) => {
+        this.response = error.response
+        alert(this.response)
+      })
     }
   }
 }
