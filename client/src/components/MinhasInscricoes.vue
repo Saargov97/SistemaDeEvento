@@ -34,10 +34,10 @@
                     {{inscricao.Evento.des_carga_horaria}}
                 </v-col>
                 <v-col cols="6" md="2">
-                   <v-btn class="green accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
+                   <v-btn class="green accent-2" fab ligth small right middle @click="downloadCertificado({inscricaoId: inscricao.id})">
                     <v-icon>save_alt</v-icon>
                   </v-btn>
-                  <v-btn class="blue accent-2" fab ligth small right middle @click="deletebank({eventoId: evento.id})">
+                  <v-btn class="blue accent-2" fab ligth small right middle @click="openCertificado({inscricaoId: inscricao.id})">
                     <v-icon>restore_page</v-icon>
                   </v-btn>
                   <v-btn class="red accent-2" fab ligth small right middle @click="desinscrever({inscricaoId: inscricao.id})">
@@ -54,6 +54,7 @@
 <script>
 import Panel from '@/components/Panel'
 import InscricoesService from '@/services/InscricoesService'
+import axios from 'axios'
 
 export default {
   components: {
@@ -62,7 +63,8 @@ export default {
   data () {
     return {
       inscricoes: null,
-      eventos: null
+      eventos: null,
+      erros: null
     }
   },
   async mounted () {
@@ -80,6 +82,37 @@ export default {
       } catch (error) {
         this.error = error.response.data.error
       }
+    },
+    async openCertificado (inscricaoId) {
+      /*
+      const response = await InscricoesService.geraCertificado(inscricaoId.inscricaoId)
+      const file = new Blob([response.data])
+      const fileURL = URL.createObjectURL(file)
+      window.open(fileURL)
+      */
+      axios({
+        url: `http://localhost:8081/geraCertificado/${inscricaoId}`,
+        method: 'POST',
+        responseType: 'blob'
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+        window.open(fileURL)
+      })
+    },
+    async downloadCertificado (inscricaoId) {
+      axios({
+        url: `http://localhost:8081/geraCertificado/${inscricaoId}`,
+        method: 'POST',
+        responseType: 'blob'
+      }).then((response) => {
+        var fileURL = window.URL.createObjectURL(new Blob([response.data]))
+        var fileLink = document.createElement('a')
+        fileLink.href = fileURL
+        fileLink.setAttribute('download', 'certification.pdf')
+        document.body.appendChild(fileLink)
+
+        fileLink.click()
+      }).catch(error => alert(error.response.data.error))
     }
   }
 }

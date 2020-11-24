@@ -8,11 +8,14 @@ import 'vuetify/dist/vuetify.min.css'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
 import moment from 'moment'
+import VueSimpleAlert from 'vue-simple-alert'
+
 // import colors from 'vuetify/lib/util/colors'
 
 Vue.config.productionTip = false
 
 Vue.use(Vuetify)
+Vue.use(VueSimpleAlert)
 
 Vue.filter('formatDate', function (value) {
   if (value) {
@@ -41,6 +44,7 @@ sync(store, router)
 /* eslint-disable no-new */
 new Vue({
   vuetify: new Vuetify(),
+  vuesimplealert: new VueSimpleAlert(),
   el: '#app',
   router,
   store,

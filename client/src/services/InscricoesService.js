@@ -9,5 +9,8 @@ export default {
   },
   delete (inscricaoId) {
     return Api().delete(`inscricao/${inscricaoId}`)
+  },
+  geraCertificado (inscricaoId) {
+    return Api().post(`geraCertificado/${inscricaoId}`, {responseType: 'blob'})
   }
 }

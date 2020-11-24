@@ -9,6 +9,7 @@ import MinhasInscricoes from '@/components/MinhasInscricoes'
 // import Banks2 from '@/components/Banks2'
 import Perfil from '@/components/Perfil'
 import BankView from '@/components/BankView'
+import ValidarChave from '@/components/ValidarChave'
 Vue.use(Router)
 
 export default new Router({
@@ -52,6 +53,11 @@ export default new Router({
       path: '/banks/:bankId',
       name: 'bank',
       component: BankView
+    },
+    {
+      path: '/validarchave',
+      name: 'validarchave',
+      component: ValidarChave
     }
   ]
 })

@@ -16,9 +16,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       unique: true
     },
-    certificadoId: {
-      type: DataTypes.INTEGER,
-    },
     ind_checkin: {
       allowNull: false,
       type: DataTypes.INTEGER,

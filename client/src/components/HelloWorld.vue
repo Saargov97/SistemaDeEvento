@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import AuthenticationService from '@/services/AuthenticationService'
 
 export default {
   name: 'HelloWorld',
@@ -13,7 +12,7 @@ export default {
     return {
       msg: 'Bem-vindo ao Sistema de Eventos, ' + (this.$store.state.user.nom_pessoa || 'por favor, complete seu cadastro na aba perfil!')
     }
-  }  
+  }
 }
 </script>
 
