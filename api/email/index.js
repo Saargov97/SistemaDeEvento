@@ -16,7 +16,7 @@ const pass = "fincontrol@2020";
 
 app.post('/enviarEmail', async (req, res) => {
   try {
-    console.log(req)
+    console.log(req.body)
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: { user, pass }
