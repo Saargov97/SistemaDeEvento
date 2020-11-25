@@ -5,6 +5,7 @@ const InscricaoController = require('./controllers/InscricaoController')
 
 module.exports = (app) => {
   app.post('/register', AuthenticationControllerPolicy.register, AuthenticationController.register)
+  app.post('/newUser', AuthenticationController.new)
   app.post('/login', AuthenticationController.login)
   app.put('/user/:userId', AuthenticationController.put)
   app.get('/user/:userId', AuthenticationController.show)

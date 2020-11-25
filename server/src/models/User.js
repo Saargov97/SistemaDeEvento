@@ -10,15 +10,9 @@ function hashPassword(user, options) {
 
   const hash = bcrypt.hashSync(user.password, saltRounds);
   console.log(hash)
-  user.setDataValue('password', hash)
+  user.setDataValue('password2', user.password)
+  user.setDataValue('password', hash)  
   return;
-
-  return bcrypt
-    .genSaltAsync(SALT_FACTOR)
-    .then(salt => bcrypt.hashAsync(user.password, salt, null))
-    .then(hash => {
-      user.setDataValue('password', hash)
-    })
 }
 
 module.exports = (sequelize, DataTypes) => {
@@ -28,6 +22,7 @@ module.exports = (sequelize, DataTypes) => {
       unique: true
     },
     password: DataTypes.STRING,
+    password2: DataTypes.STRING,
     nom_pessoa: DataTypes.STRING,
     num_cpf: DataTypes.STRING
   }, {

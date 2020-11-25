@@ -8,7 +8,7 @@ module.exports = {
                 new RegExp('^[a-zA-Z0-9]{8,32}$')
             )
         }
-
+        console.log('validaderegister')
         const { error, value } = Joi.validate(req.body, schema)
 
         if (error) {

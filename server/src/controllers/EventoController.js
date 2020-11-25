@@ -18,7 +18,7 @@ module.exports = {
     try {
       const eventos = await Evento.findAll({
         where: {
-          id: req.params.userId
+          userId: req.params.userId
         },
         limit: 50
       })
