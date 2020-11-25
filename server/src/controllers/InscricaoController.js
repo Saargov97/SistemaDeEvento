@@ -13,6 +13,19 @@ function hashCertificado(inscricaoId, options) {
   return md5(`${inscricaoId}`);
 }
 
+async function EnviarEmail(destinatario, assunto, mensagem){
+  const req = {
+    destinatario: destinatario,
+    assunto: assunto,
+    texto: mensagem
+  }
+  await fetch('http://localhost:3002/enviarEmail', {
+        method: 'POST',
+        body: JSON.stringify(req),
+        headers: { 'Content-Type': 'application/json' },
+      });
+}
+
 module.exports = {
   async index(req, res) {
     try {
@@ -99,6 +112,8 @@ module.exports = {
          })
        }
 
+      EnviarEmail(inscricao.User.dataValues.email, 'Certificado gerado', `Seu certificado para o evento ${inscricao.Evento.dataValues.nom_evento} foi gerado!`)
+
       const certificado = {
         idInscricao: req.params.inscricaoId,
         nom_evento: inscricao.Evento.dataValues.nom_evento,
@@ -161,7 +176,18 @@ module.exports = {
   },
   async post(req, res) {
     try {
+      const user = await User.findOne({
+        where: {
+          id: req.body.userId
+        }
+      })
+      const evento = await Evento.findOne({
+        where: {
+          id: req.body.eventoId
+        }
+      })
       const inscricao = await Inscricao.create(req.body)
+      EnviarEmail(user.email, 'Inscrição evento', `Você foi inscrito no evento ${evento.nom_evento}!`)
       res.send(inscricao)
     } catch (err) {
       res.status(500).send({
@@ -178,6 +204,17 @@ module.exports = {
           id: req.params.inscricaoId
         }
       })
+      const user = await User.findOne({
+        where: {
+          id: inscricao.userId
+        }
+      })
+      const evento = await Evento.findOne({
+        where: {
+          id: inscricao.eventoId
+        }
+      })
+      EnviarEmail(user.email, 'Presença evento', `Sua presença no evento ${evento.nom_evento} foi confirmada!`)
       res.send(inscricao)
     } catch (err) {
       res.status(500).send({
@@ -201,6 +238,22 @@ module.exports = {
   },
   async delete(req, res) {
     try {
+      const inscricao = await Inscricao.findOne({
+        where: {
+          id: req.params.inscricaoId
+        }
+      })
+      const user = await User.findOne({
+        where: {
+          id: inscricao.userId
+        }
+      })
+      const evento = await Evento.findOne({
+        where: {
+          id: inscricao.eventoId
+        }
+      })
+      EnviarEmail(user.email, 'Cancelamento de inscrição', `Foi cancelado sua inscrição no evento ${evento.nom_evento}!`)
       await Inscricao.destroy({
         where: {
           id: req.params.inscricaoId
