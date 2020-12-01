@@ -12,11 +12,13 @@ data class Evento(
     @ColumnInfo(name = "nom_evento")
     val nom_evento: String,
     @ColumnInfo(name = "dta_evento")
-    val dta_evento: LocalDateTime,
+    val dta_evento: String,
     @ColumnInfo(name = "num_vaga")
     val num_vaga: Int,
     @ColumnInfo(name = "vlr_evento")
     val vlr_evento: Double,
     @ColumnInfo(name = "des_carga_horaria")
-    val des_carga_horaria: String
+    val des_carga_horaria: String,
+    @ColumnInfo(name = "ind_atualizado")
+    val ind_atualizado: Int? = 0
 )

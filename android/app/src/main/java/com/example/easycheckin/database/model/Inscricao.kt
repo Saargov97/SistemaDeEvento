@@ -17,5 +17,7 @@ data class Inscricao(
     @ColumnInfo(name = "userId")
     val userId: Int,
     @ColumnInfo(name = "eventoId")
-    val eventoId: Int
+    val eventoId: Int,
+    @ColumnInfo(name = "ind_atualizado")
+    val ind_atualizado: Int? = 0
 )

@@ -1,10 +1,38 @@
 package com.example.easycheckin
 
+import android.Manifest
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.room.ColumnInfo
+import androidx.room.PrimaryKey
+import com.example.easycheckin.api.EventoModel
+import com.example.easycheckin.api.RetrofitInterface
+import com.example.easycheckin.api.UserModel
+import com.example.easycheckin.database.EventoRepository
+import com.example.easycheckin.database.UserRepository
+import com.example.easycheckin.ui.evento.EventoViewModel
+import com.example.easycheckin.ui.user.UserViewModel
+import com.example.routemap.database.AppDatabase
+import com.example.routemap.database.PositionRepository
+import com.example.routemap.database.model.Evento
+import com.example.routemap.database.model.Position
+import com.example.routemap.database.model.User
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +45,19 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Sync : Fragment() {
+
+    private val userViewModel: UserViewModel by activityViewModels {object: ViewModelProvider.Factory{
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return UserViewModel(UserRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).userDAO())) as T
+        }
+    }}
+
+    private val eventosViewModel: EventoViewModel by activityViewModels {object: ViewModelProvider.Factory{
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return EventoViewModel(EventoRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).eventoDAO())) as T
+        }
+    }}
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -27,6 +68,7 @@ class Sync : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
     }
 
     override fun onCreateView(
@@ -35,6 +77,48 @@ class Sync : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sync, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val btn: Button = view.findViewById(R.id.syncBtnSync)
+        btn.setOnClickListener { view ->
+            val rf = Retrofit.Builder()
+                .baseUrl(RetrofitInterface.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create()).build()
+
+            var API = rf.create(RetrofitInterface::class.java)
+            var get = API.users()
+            var getEventos = API.events(1)
+            get?.enqueue(object: Callback<List<UserModel?>?> {
+                override fun onResponse(call: Call<List<UserModel?>?>, response: Response<List<UserModel?>?>) {
+                    var userlist : List<UserModel>? = response.body() as List<UserModel>
+                    for (i in userlist!!.indices) {
+                        userViewModel.insert(User(id = userlist[i].id, email = userlist[i].email!!, nom_pessoa = userlist[i].nom_pessoa!!,
+                             num_cpf = userlist[i].num_cpf!!, ind_atualizado = 1))
+                    }
+                }
+
+                override fun onFailure(call: Call<List<UserModel?>?>, t: Throwable) {
+                    Snackbar.make(requireView(),  "" + t.message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                }
+            })
+            getEventos?.enqueue(object: Callback<List<EventoModel?>?> {
+                override fun onResponse(call: Call<List<EventoModel?>?>, response: Response<List<EventoModel?>?>) {
+                    var elist : List<EventoModel>? = response.body() as List<EventoModel>
+                    for (i in elist!!.indices) {
+                        eventosViewModel.insert(Evento(id = elist[i].id, nom_evento = elist[i].nom_evento!!, dta_evento = elist[i].dta_evento!!,
+                            num_vaga = elist[i].num_vaga, vlr_evento = elist[i].vlr_evento, des_carga_horaria = elist[i].des_carga_horaria!!, ind_atualizado = 1))
+                    }
+                }
+
+                override fun onFailure(call: Call<List<EventoModel?>?>, t: Throwable) {
+                    Snackbar.make(requireView(),  "" + t.message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                }
+            })
+
+            Snackbar.make(view, "Sincronizado!!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+        }
     }
 
     companion object {
