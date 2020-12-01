@@ -60,10 +60,10 @@ public abstract class AppDatabase : RoomDatabase() {
             //  positionDAO.deleteAll()
 
             // Add sample positions.
-            var position = Position(date = LocalDateTime.now().minusDays(2), latitude =  37.4219983, longitude =  -122.084)
+           /* var position = Position(date = LocalDateTime.now().minusDays(2), latitude =  37.4219983, longitude =  -122.084)
             positionDAO.insert(position)
             position = Position(date = LocalDateTime.now().minusDays(1), latitude =  -29.6119323, longitude = -52.2000415)
-            positionDAO.insert(position)
+            positionDAO.insert(position)*/
         }
     }
 
