@@ -9,25 +9,25 @@
     android:padding="8dp">
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvDate"
+        android:id="@+id/tvNomEvento"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline4"
-        tools:text="03/09/2020 10:00:56"
+        tools:text="Meu evento 2020"
         />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvLatitude"
+        android:id="@+id/tvValor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Latitude: -29.6465465"
+        android:text="Valor: 1.000,00"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvLongitude"
+        android:id="@+id/tvData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Longitude: -52.54654455"
+        android:text="Data: 06/12/2020"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6" />
 
 

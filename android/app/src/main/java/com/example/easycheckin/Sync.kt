@@ -14,15 +14,19 @@ import androidx.lifecycle.lifecycleScope
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import com.example.easycheckin.api.EventoModel
+import com.example.easycheckin.api.InscricaoModel
 import com.example.easycheckin.api.RetrofitInterface
 import com.example.easycheckin.api.UserModel
 import com.example.easycheckin.database.EventoRepository
+import com.example.easycheckin.database.InscricaoRepository
 import com.example.easycheckin.database.UserRepository
 import com.example.easycheckin.ui.evento.EventoViewModel
+import com.example.easycheckin.ui.inscricao.InscricaoViewModel
 import com.example.easycheckin.ui.user.UserViewModel
 import com.example.routemap.database.AppDatabase
 import com.example.routemap.database.PositionRepository
 import com.example.routemap.database.model.Evento
+import com.example.routemap.database.model.Inscricao
 import com.example.routemap.database.model.Position
 import com.example.routemap.database.model.User
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -58,6 +62,12 @@ class Sync : Fragment() {
         }
     }}
 
+    private val inscricaoViewModel: InscricaoViewModel by activityViewModels {object: ViewModelProvider.Factory{
+        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+            return InscricaoViewModel(InscricaoRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).inscricaoDAO())) as T
+        }
+    }}
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -90,6 +100,7 @@ class Sync : Fragment() {
             var API = rf.create(RetrofitInterface::class.java)
             var get = API.users()
             var getEventos = API.events(1)
+            var getInscricao = API.inscricoes(1)
             get?.enqueue(object: Callback<List<UserModel?>?> {
                 override fun onResponse(call: Call<List<UserModel?>?>, response: Response<List<UserModel?>?>) {
                     var userlist : List<UserModel>? = response.body() as List<UserModel>
@@ -113,6 +124,20 @@ class Sync : Fragment() {
                 }
 
                 override fun onFailure(call: Call<List<EventoModel?>?>, t: Throwable) {
+                    Snackbar.make(requireView(),  "" + t.message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                }
+            })
+            getInscricao?.enqueue(object: Callback<List<InscricaoModel?>?> {
+                override fun onResponse(call: Call<List<InscricaoModel?>?>, response: Response<List<InscricaoModel?>?>) {
+                    var ilist : List<InscricaoModel>? = response.body() as List<InscricaoModel>
+                    for (i in ilist!!.indices) {
+                        inscricaoViewModel.insert(Inscricao(id = ilist[i].id, des_qrcode = ilist[i].des_qrcode!!, des_hash = ilist[i].des_hash!!,
+                            ind_checkin = ilist[i].ind_checkin, userId = ilist[i].userId, eventoId = ilist[i].eventoId, ind_atualizado = 1)
+                        )
+                    }
+                }
+
+                override fun onFailure(call: Call<List<InscricaoModel?>?>, t: Throwable) {
                     Snackbar.make(requireView(),  "" + t.message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
             })
