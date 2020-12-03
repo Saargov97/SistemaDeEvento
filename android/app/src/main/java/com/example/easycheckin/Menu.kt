@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.fragment.findNavController
+import com.example.easycheckin.shared.navigateSafe
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,10 +47,10 @@ class Menu : Fragment() {
         val eventsButton = view.findViewById<Button>(R.id.menuBtnEvento)
 
         syncButton.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_to_sync)
+            findNavController().navigateSafe(R.id.action_menu_to_sync)
         }
         eventsButton.setOnClickListener {
-            findNavController().navigate(R.id.action_menu_to_eventosFragment)
+            findNavController().navigateSafe(R.id.action_menu_to_eventosFragment)
         }
     }
 

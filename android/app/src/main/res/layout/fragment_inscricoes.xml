@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.evento.EventosFragment">
+    tools:context=".ui.inscricao.InscricoesFragment">
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvEvento"
@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Eventos"
+        android:text="Inscrições"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvHEventos"
+        android:id="@+id/rvInscricoes"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"
@@ -29,6 +29,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvEvento"
         tools:itemCount="100"
-        tools:listitem="@layout/item_position" />
+        tools:listitem="@layout/item_inscricao" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

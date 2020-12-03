@@ -30,7 +30,7 @@ class EventosAdapter(
             evento = item
 
             binding.tvNomEvento.text = item.nom_evento
-            binding.tvValor.text = "Valor: " //${item.vlr_evento}"
+            binding.tvValor.text = "Valor: ${item.vlr_evento}"
             binding.tvData.text = "Data: ${item.dta_evento}"
             /*Glide.with(binding.root.context)
                 .load(urlProduto(item.produtoId))

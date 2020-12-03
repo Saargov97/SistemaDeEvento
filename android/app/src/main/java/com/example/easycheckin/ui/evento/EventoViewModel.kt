@@ -12,8 +12,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EventoViewModel @ViewModelInject constructor (private val pRes: EventoRepository) : ViewModel() {
-    //private val args: EventosFragmentArgs by savedStateHandle.navArgs()
-    // , @Assisted savedStateHandle: SavedStateHandle
 
     val eventos = pRes.allEvents
 

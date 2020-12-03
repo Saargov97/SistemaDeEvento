@@ -14,6 +14,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.easycheckin.R
 import com.example.easycheckin.database.EventoRepository
 import com.example.easycheckin.databinding.FragmentEventosBinding
+import com.example.easycheckin.shared.navigateSafe
 import com.example.routemap.database.AppDatabase
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -23,7 +24,7 @@ class EventosFragment : Fragment(R.layout.fragment_eventos) {
     private val viewModel: EventoViewModel by viewModels()
 
     private val eventosAdapter = EventosAdapter {
-        findNavController().navigate(EventosFragmentDirections.actionEventosFragmentToInscricaoFragment(it.id))
+        findNavController().navigateSafe(EventosFragmentDirections.actionEventosFragmentToInscricaoFragment(it.id, it.nom_evento!!))
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
