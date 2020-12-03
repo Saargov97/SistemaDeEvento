@@ -22,6 +22,7 @@ class InscricoesFragment : Fragment(R.layout.fragment_inscricoes) {
     private val viewModel: InscricaoViewModel by viewModels()
 
     private val inscricoesAdapter = InscricoesAdapter {
+        viewModel.updateCheckin(it.id)
       //  findNavController().navigate(EventosFragmentDirections.actionEventosFragmentToInscricaoFragment(it.id, it.nom_evento!!))
     }
 

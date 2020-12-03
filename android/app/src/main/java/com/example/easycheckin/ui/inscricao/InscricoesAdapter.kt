@@ -11,7 +11,8 @@ import com.example.routemap.database.DAO.InscricaoDAO
 import com.example.routemap.database.model.Inscricao
 
 class InscricoesAdapter(
-    private val onClick: (InscricaoDAO.NamedInscricao) -> Unit
+  //  private val onClick: (InscricaoDAO.NamedInscricao) -> Unit,
+    private val onClickCheckin: (InscricaoDAO.NamedInscricao) -> Unit
 ) : ListAdapter<InscricaoDAO.NamedInscricao, InscricoesAdapter.InscricaoViewHolder>(InscricaoItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): InscricaoViewHolder = InscricaoViewHolder(
         ItemInscricaoBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -25,7 +26,8 @@ class InscricoesAdapter(
         private lateinit var inscricao: InscricaoDAO.NamedInscricao
 
         init {
-            binding.root.setOnClickListener { onClick(inscricao) }
+           // binding.root.setOnClickListener { onClick(inscricao) }
+            binding.inscrBtnCheckin.setOnClickListener { onClickCheckin(inscricao) }
         }
 
         fun bind(item: InscricaoDAO.NamedInscricao) {
@@ -37,13 +39,6 @@ class InscricoesAdapter(
                 binding.inscrBtnCheckin.text = "Ausente"
             } else {
                 binding.inscrBtnCheckin.text = "Presente"
-            }
-            binding.inscrBtnCheckin.setOnClickListener {
-                if (binding.inscrBtnCheckin.text.equals("Presente")) {
-                    binding.inscrBtnCheckin.text = "Ausente"
-                } else {
-                    binding.inscrBtnCheckin.text = "Presente"
-                }
             }
         }
     }

@@ -18,6 +18,9 @@ interface RetrofitInterface {
     @GET("inscricaoEvento/{id}")
     fun inscricoes(@Path("id") id: Int) : Call<List<InscricaoModel?>?>?
 
+    @PUT("checkin/{id}")
+    fun updateCheckin(@Path("id") id: Int, @Body body: InscricaoModel): Call<InscricaoModel?>?
+
    /* @POST("position")
     fun addPosition(@Body body: PostModel): Call<PostModel?>?
 

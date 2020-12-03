@@ -1,5 +1,7 @@
 package com.example.easycheckin.data
 
+import com.example.easycheckin.ui.login.LoggedInUserView
+
 /**
  * A generic class that holds a value with its loading status.
  * @param <T>

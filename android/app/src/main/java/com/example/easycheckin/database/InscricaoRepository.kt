@@ -11,6 +11,9 @@ class InscricaoRepository @Inject constructor (private val inscricaoDao: Inscric
     val allInscricoes: LiveData<List<Inscricao>> = inscricaoDao.getSavedInscricoes()
     fun allNamedInscricoes(eventoId: Int): LiveData<List<InscricaoDAO.NamedInscricao>> = inscricaoDao.getNamedInscricoes(eventoId)
 
+    suspend fun allSyncInscricoes() = inscricaoDao.getSyncInscricoes()
+    suspend fun updateCheckin(id: Int) = inscricaoDao.updateCheckin(id)
+    suspend fun updateSync(id: Int) = inscricaoDao.updateSync(id)
 
     suspend fun insert(position: Inscricao) {
         inscricaoDao.insert(position)

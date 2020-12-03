@@ -9,7 +9,7 @@
     <!-- TODO: Update blank fragment layout -->
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/tvMenu"
-        style="@style/TextAppearance.MaterialComponents.Headline2"
+        style="@style/TextAppearance.MaterialComponents.Headline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

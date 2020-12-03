@@ -197,19 +197,20 @@ module.exports = {
   },
   async checkin(req, res) {
     try {
-      var inscricao = await Inscricao.update({
-        ind_checkin: 1
+      console.log("checkin")
+      console.log(req)
+      inscricao = await Inscricao.update({
+        ind_checkin: req.body.ind_checkin
       }, {
         where: {
           id: req.params.inscricaoId
         }
       })
-      inscricao = await Inscricao.findOne({
+      var inscricao = await Inscricao.findOne({
         where: {
           id: req.params.inscricaoId
         }
-      })
-      console.log(inscricao)
+      })      
       const user = await User.findOne({
         where: {
           id: inscricao.userId

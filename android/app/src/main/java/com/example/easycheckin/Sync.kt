@@ -7,10 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.room.ColumnInfo
 import androidx.room.PrimaryKey
 import com.example.easycheckin.api.EventoModel
@@ -89,13 +93,27 @@ class Sync : Fragment() {
             var get = API.users()
             var getEventos = API.events(1)
             var getInscricao = API.inscricoes(1)
+
+            inscricaoViewModel.syncInscricoes()
+
+            inscricaoViewModel.syncResult.observe(viewLifecycleOwner,
+                Observer { syncResult ->
+                    syncResult ?: return@Observer
+                    syncResult.error?.let {
+                        Snackbar.make(view, "Falha ao sincronizar checkin: " + it, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                    }
+                    syncResult.success?.let {
+                        Snackbar.make(view, "Checkin sincronizado com sucesso! " + it, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                    }
+                })
+
             get?.enqueue(object: Callback<List<UserModel?>?> {
                 override fun onResponse(call: Call<List<UserModel?>?>, response: Response<List<UserModel?>?>) {
                     var userlist : List<UserModel>? = response.body() as List<UserModel>
                     for (i in userlist!!.indices) {
                         userViewModel.insert(User(id = userlist[i].id, email = userlist[i].email!!, password = userlist[i].password!!,
-                             password2 = userlist[i].password2!!, nom_pessoa = userlist[i].nom_pessoa,
-                             num_cpf = userlist[i].num_cpf, ind_atualizado = 1))
+                            password2 = userlist[i].password2!!, nom_pessoa = userlist[i].nom_pessoa,
+                            num_cpf = userlist[i].num_cpf, ind_atualizado = 1))
                     }
                     Snackbar.make(view, "Sincronizado users!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
@@ -133,7 +151,6 @@ class Sync : Fragment() {
                     Snackbar.make(requireView(),  "" + t.message, Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
             })
-
             //Snackbar.make(view, "Sincronizado!!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
     }
