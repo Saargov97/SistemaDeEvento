@@ -3,30 +3,42 @@ package com.example.easycheckin.ui.evento
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewGroupCompat
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
 import com.example.easycheckin.R
+import com.example.easycheckin.database.EventoRepository
+import com.example.easycheckin.databinding.FragmentEventosBinding
+import com.example.routemap.database.AppDatabase
+import dagger.hilt.android.AndroidEntryPoint
 
-class EventosFragment : Fragment() {
+@AndroidEntryPoint
+class EventosFragment : Fragment(R.layout.fragment_eventos) {
 
-    companion object {
-        fun newInstance() = EventosFragment()
+    private val viewModel: EventoViewModel by viewModels()
+
+    private val eventosAdapter = EventosAdapter()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+       /* if (view is ViewGroup)
+            ViewGroupCompat.setTransitionGroup(view, true)*/
+
+        val binding = FragmentEventosBinding.bind(view)
+        binding.rvHEventos.adapter = eventosAdapter
+
+        viewModel.eventos.observe(viewLifecycleOwner, eventosAdapter::submitList)
+
+        /*require(view is RecyclerView)
+
+        val eventoAdapter = EventosAdapter {}
+        view.adapter = eventoAdapter
+
+        eventoViewModel.eventos.observe(viewLifecycleOwner, eventoAdapter::submitList)*/
     }
-
-    private lateinit var viewModel: EventoViewModel
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_eventos, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(EventoViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

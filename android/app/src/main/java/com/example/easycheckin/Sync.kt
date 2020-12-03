@@ -105,9 +105,11 @@ class Sync : Fragment() {
                 override fun onResponse(call: Call<List<UserModel?>?>, response: Response<List<UserModel?>?>) {
                     var userlist : List<UserModel>? = response.body() as List<UserModel>
                     for (i in userlist!!.indices) {
-                        userViewModel.insert(User(id = userlist[i].id, email = userlist[i].email!!, nom_pessoa = userlist[i].nom_pessoa!!,
-                             num_cpf = userlist[i].num_cpf!!, ind_atualizado = 1))
+                        userViewModel.insert(User(id = userlist[i].id, email = userlist[i].email!!, password = userlist[i].password!!,
+                             password2 = userlist[i].password2!!, nom_pessoa = userlist[i].nom_pessoa,
+                             num_cpf = userlist[i].num_cpf, ind_atualizado = 1))
                     }
+                    Snackbar.make(view, "Sincronizado users!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
 
                 override fun onFailure(call: Call<List<UserModel?>?>, t: Throwable) {
@@ -118,9 +120,10 @@ class Sync : Fragment() {
                 override fun onResponse(call: Call<List<EventoModel?>?>, response: Response<List<EventoModel?>?>) {
                     var elist : List<EventoModel>? = response.body() as List<EventoModel>
                     for (i in elist!!.indices) {
-                        eventosViewModel.insert(Evento(id = elist[i].id, nom_evento = elist[i].nom_evento!!, dta_evento = elist[i].dta_evento!!,
-                            num_vaga = elist[i].num_vaga, vlr_evento = elist[i].vlr_evento, des_carga_horaria = elist[i].des_carga_horaria!!, ind_atualizado = 1))
+                        eventosViewModel.insert(Evento(id = elist[i].id, nom_evento = elist[i].nom_evento, dta_evento = elist[i].dta_evento,
+                            num_vaga = elist[i].num_vaga, vlr_evento = elist[i].vlr_evento, des_carga_horaria = elist[i].des_carga_horaria, ind_atualizado = 1))
                     }
+                    Snackbar.make(view, "Sincronizado eventos!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
 
                 override fun onFailure(call: Call<List<EventoModel?>?>, t: Throwable) {
@@ -131,10 +134,11 @@ class Sync : Fragment() {
                 override fun onResponse(call: Call<List<InscricaoModel?>?>, response: Response<List<InscricaoModel?>?>) {
                     var ilist : List<InscricaoModel>? = response.body() as List<InscricaoModel>
                     for (i in ilist!!.indices) {
-                        inscricaoViewModel.insert(Inscricao(id = ilist[i].id, des_qrcode = ilist[i].des_qrcode!!, des_hash = ilist[i].des_hash!!,
+                        inscricaoViewModel.insert(Inscricao(id = ilist[i].id, des_qrcode = ilist[i].des_qrcode, des_hash = ilist[i].des_hash,
                             ind_checkin = ilist[i].ind_checkin, userId = ilist[i].userId, eventoId = ilist[i].eventoId, ind_atualizado = 1)
                         )
                     }
+                    Snackbar.make(view, "Sincronizado inscrições!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
                 }
 
                 override fun onFailure(call: Call<List<InscricaoModel?>?>, t: Throwable) {
@@ -142,7 +146,7 @@ class Sync : Fragment() {
                 }
             })
 
-            Snackbar.make(view, "Sincronizado!!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
+            //Snackbar.make(view, "Sincronizado!!!", Snackbar.LENGTH_LONG).setAction("Action", null).show()
         }
     }
 

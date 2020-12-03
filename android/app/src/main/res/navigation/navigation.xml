@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_menu_to_sync"
             app:destination="@id/sync" />
+        <action
+            android:id="@+id/action_menu_to_eventosFragment"
+            app:destination="@id/eventosFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -28,4 +31,9 @@
         android:name="com.example.easycheckin.Sync"
         android:label="fragment_sync"
         tools:layout="@layout/fragment_sync" />
+    <fragment
+        android:id="@+id/eventosFragment"
+        android:name="com.example.easycheckin.ui.evento.EventosFragment"
+        android:label="fragment_eventos"
+        tools:layout="@layout/fragment_eventos" />
 </navigation>

@@ -48,12 +48,14 @@ class Menu : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val syncButton = view.findViewById<Button>(R.id.menuBtnSync)
+        val eventsButton = view.findViewById<Button>(R.id.menuBtnEvento)
 
         syncButton.setOnClickListener {
             findNavController().navigate(R.id.action_menu_to_sync)
         }
-
-
+        eventsButton.setOnClickListener {
+            findNavController().navigate(R.id.action_menu_to_eventosFragment)
+        }
     }
 
     companion object {

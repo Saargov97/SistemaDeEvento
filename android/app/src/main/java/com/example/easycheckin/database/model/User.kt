@@ -11,10 +11,14 @@ data class User(
     val id: Int? = null,
     @ColumnInfo(name = "email")
     val email: String,
+    @ColumnInfo(name = "password")
+    val password: String,
+    @ColumnInfo(name = "password2")
+    val password2: String,
     @ColumnInfo(name = "nom_pessoa")
-    val nom_pessoa: String,
+    val nom_pessoa: String? = null,
     @ColumnInfo(name = "num_cpf")
-    val num_cpf: String,
+    val num_cpf: String? = null,
     @ColumnInfo(name = "ind_atualizado")
     val ind_atualizado: Int? = 0
 )
