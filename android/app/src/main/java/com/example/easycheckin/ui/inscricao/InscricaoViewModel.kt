@@ -36,24 +36,31 @@ class InscricaoViewModel @ViewModelInject constructor (private val pRes: Inscric
         var API = rf.create(RetrofitInterface::class.java)
         var syncInscrs : List<Inscricao> =  pRes.allSyncInscricoes()
         var putCheckIn: Call<InscricaoModel?>? = null
-        for (i in syncInscrs!!.indices) {
-            val ins = InscricaoModel()
-            ins.id = syncInscrs[i].id
-            ins.ind_checkin = syncInscrs[i].ind_checkin
-            putCheckIn = API.updateCheckin(syncInscrs[i].id, ins)
+        if (syncInscrs != null) {
+            for (i in syncInscrs!!.indices) {
+                val ins = InscricaoModel()
+                ins.id = syncInscrs[i].id
+                ins.ind_checkin = syncInscrs[i].ind_checkin
+                putCheckIn = API.updateCheckin(syncInscrs[i].id, ins)
 
-            putCheckIn?.enqueue(object : Callback<InscricaoModel?> {
-                override fun onResponse(call: Call<InscricaoModel?>, response: Response<InscricaoModel?>) {
-                    updateSync(syncInscrs[i].id)
-                    _syncResult.value = SyncResult(success = 1)
-                }
+                putCheckIn?.enqueue(object : Callback<InscricaoModel?> {
+                    override fun onResponse(
+                        call: Call<InscricaoModel?>,
+                        response: Response<InscricaoModel?>
+                    ) {
+                        updateSync(syncInscrs[i].id)
+                        _syncResult.value = SyncResult(success = 1)
+                    }
 
-                override fun onFailure(call: Call<InscricaoModel?>, t: Throwable) {
-                    _syncResult.value = SyncResult(error = t.message)
-                }
-            })
+                    override fun onFailure(call: Call<InscricaoModel?>, t: Throwable) {
+                        _syncResult.value = SyncResult(error = t.message)
+                    }
+                })
+            }
+            _syncResult.value = SyncResult(success = 1)
+        } else {
+            _syncResult.value = SyncResult(success = 0)
         }
-        _syncResult.value = SyncResult(success = 1)
     }
     fun namedInscricoes(eventoId: Int) = pRes.allNamedInscricoes(eventoId)
 

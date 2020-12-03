@@ -103,7 +103,13 @@ class Sync : Fragment() {
                         Snackbar.make(view, "Falha ao sincronizar checkin: " + it, Snackbar.LENGTH_LONG).setAction("Action", null).show()
                     }
                     syncResult.success?.let {
-                        Snackbar.make(view, "Checkin sincronizado com sucesso! " + it, Snackbar.LENGTH_LONG).setAction("Action", null).show()
+                        if (it == 1) {
+                            Snackbar.make(
+                                view,
+                                "Checkin sincronizado com sucesso! " + it,
+                                Snackbar.LENGTH_LONG
+                            ).setAction("Action", null).show()
+                        }
                     }
                 })
 
