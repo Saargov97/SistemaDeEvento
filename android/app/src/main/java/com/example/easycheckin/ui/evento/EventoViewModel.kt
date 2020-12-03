@@ -1,14 +1,19 @@
 package com.example.easycheckin.ui.evento
 
+import androidx.hilt.Assisted
 import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.easycheckin.database.EventoRepository
+import com.example.easycheckin.shared.navArgs
 import com.example.routemap.database.model.Evento
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class EventoViewModel @ViewModelInject constructor (private val pRes: EventoRepository) : ViewModel() {
+    //private val args: EventosFragmentArgs by savedStateHandle.navArgs()
+    // , @Assisted savedStateHandle: SavedStateHandle
 
     val eventos = pRes.allEvents
 

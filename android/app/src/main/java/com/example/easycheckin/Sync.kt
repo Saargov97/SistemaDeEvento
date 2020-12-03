@@ -50,23 +50,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class Sync : Fragment() {
 
-    private val userViewModel: UserViewModel by activityViewModels {object: ViewModelProvider.Factory{
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return UserViewModel(UserRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).userDAO())) as T
-        }
-    }}
+    private val userViewModel: UserViewModel by activityViewModels ()
 
-    private val eventosViewModel: EventoViewModel by activityViewModels {object: ViewModelProvider.Factory{
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return EventoViewModel(EventoRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).eventoDAO())) as T
-        }
-    }}
+    private val eventosViewModel: EventoViewModel by activityViewModels ()
 
-    private val inscricaoViewModel: InscricaoViewModel by activityViewModels {object: ViewModelProvider.Factory{
-        override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-            return InscricaoViewModel(InscricaoRepository(AppDatabase.getDatabase(requireContext(), lifecycleScope).inscricaoDAO())) as T
-        }
-    }}
+    private val inscricaoViewModel: InscricaoViewModel by activityViewModels ()
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null

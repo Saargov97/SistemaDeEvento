@@ -7,8 +7,9 @@ import com.example.routemap.database.DAO.UserDAO
 import com.example.routemap.database.model.User
 import java.io.IOException
 import java.util.*
+import javax.inject.Inject
 
-class UserRepository(private val userDao: UserDAO)  {
+class UserRepository @Inject constructor (private val userDao: UserDAO)  {
     // Room executes all queries on a separate thread.
     // Observed LiveData will notify the observer when the data has changed.
     val allUsers: LiveData<List<User>> = userDao.getSavedUsers()
@@ -24,26 +25,15 @@ class UserRepository(private val userDao: UserDAO)  {
         userDao.insert(position)
     }
 
-    /*fun login2(email: String, password: String): Result<User> {
-       try {
-            val u = userDao.login(email, password)
-            // TODO: handle loggedInUser authentication
-            return Result.Success(u)
-        } catch (e: Throwable) {
-            return Result.Error(IOException("Error logging in", e))
+    suspend fun login(email: String, password: String): Result<User> {
+        val result = userDao.login(email, password)
+
+        if (result != null) {
+            return Result.Success(result)
+        } else {
+            return Result.Error(Exception("Usuário não encontrado!"))
         }
     }
-
-    fun login(email: String, password: String): Result<User? {
-        // handle login
-        val result = login2(email, password)
-
-        if (result is Result.Success) {
-            setLoggedInUser(result.data)
-        }
-
-        return result
-    }*/
 
     private fun setLoggedInUser(u: User) {
         this.user = u

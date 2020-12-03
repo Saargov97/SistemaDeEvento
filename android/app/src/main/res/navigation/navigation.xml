@@ -35,5 +35,18 @@
         android:id="@+id/eventosFragment"
         android:name="com.example.easycheckin.ui.evento.EventosFragment"
         android:label="fragment_eventos"
-        tools:layout="@layout/fragment_eventos" />
+        tools:layout="@layout/fragment_eventos" >
+        <action
+            android:id="@+id/action_eventosFragment_to_inscricaoFragment"
+            app:destination="@id/inscricaoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/inscricaoFragment"
+        android:name="com.example.easycheckin.InscricaoFragment"
+        android:label="inscricao_fragment"
+        tools:layout="@layout/inscricao_fragment">
+        <argument
+            android:name="eventoId"
+            app:argType="integer" />
+    </fragment>
 </navigation>

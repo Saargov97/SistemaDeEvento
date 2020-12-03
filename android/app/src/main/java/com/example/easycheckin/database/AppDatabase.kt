@@ -69,9 +69,9 @@ public abstract class AppDatabase : RoomDatabase() {
             //  positionDAO.deleteAll()
 
             // Add sample positions.
-           /* var position = Position(date = LocalDateTime.now().minusDays(2), latitude =  37.4219983, longitude =  -122.084)
-            positionDAO.insert(position)
-            position = Position(date = LocalDateTime.now().minusDays(1), latitude =  -29.6119323, longitude = -52.2000415)
+            var u = User(id = 0, email = "saargov", password = "12345678", password2 = "12345678", nom_pessoa = "rAFAEL", num_cpf = "12313211321", ind_atualizado = 1)
+            userDAO.insert(u)
+           /* position = Position(date = LocalDateTime.now().minusDays(1), latitude =  -29.6119323, longitude = -52.2000415)
             positionDAO.insert(position)*/
         }
     }

@@ -18,7 +18,9 @@ import android.widget.Toast
 import androidx.navigation.fragment.findNavController
 
 import com.example.easycheckin.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var loginViewModel: LoginViewModel
@@ -33,7 +35,7 @@ class LoginFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this)
             .get(LoginViewModel::class.java)
 
         val usernameEditText = view.findViewById<EditText>(R.id.username)

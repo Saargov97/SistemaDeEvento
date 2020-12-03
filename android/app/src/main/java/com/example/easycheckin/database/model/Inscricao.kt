@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "inscricao")
 data class Inscricao(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int = 0,
     @ColumnInfo(name = "des_qrcode")
     val des_qrcode: String? = null,
     @ColumnInfo(name = "des_hash")

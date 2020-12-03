@@ -8,8 +8,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.easycheckin.databinding.ItemPositionBinding
 import com.example.routemap.database.model.Evento
 
-class EventosAdapter : ListAdapter<Evento, EventosAdapter.EventoViewHolder>(EventoItemCallback()) {
-
+class EventosAdapter(
+    private val onClick: (Evento) -> Unit
+) : ListAdapter<Evento, EventosAdapter.EventoViewHolder>(EventoItemCallback()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventoViewHolder = EventoViewHolder(
         ItemPositionBinding.inflate(LayoutInflater.from(parent.context), parent, false)
     )
@@ -18,8 +19,16 @@ class EventosAdapter : ListAdapter<Evento, EventosAdapter.EventoViewHolder>(Even
     override fun onBindViewHolder(holder: EventoViewHolder, evento: Int): Unit =
             holder.bind(getItem(evento))
 
-    class EventoViewHolder(private val binding: ItemPositionBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class EventoViewHolder(private val binding: ItemPositionBinding) : RecyclerView.ViewHolder(binding.root) {
+        private lateinit var evento: Evento
+
+        init {
+            binding.root.setOnClickListener { onClick(evento) }
+        }
+
         fun bind(item: Evento) {
+            evento = item
+
             binding.tvNomEvento.text = item.nom_evento
             binding.tvValor.text = "Valor: " //${item.vlr_evento}"
             binding.tvData.text = "Data: ${item.dta_evento}"

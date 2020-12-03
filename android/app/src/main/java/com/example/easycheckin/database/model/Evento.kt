@@ -8,7 +8,7 @@ import java.time.LocalDateTime
 @Entity(tableName = "evento")
 data class Evento(
     @PrimaryKey(autoGenerate = true)
-    val id: Int? = null,
+    val id: Int = 0,
     @ColumnInfo(name = "nom_evento")
     val nom_evento: String? = null,
     @ColumnInfo(name = "dta_evento")
